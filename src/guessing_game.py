@@ -1,5 +1,5 @@
 import random
-import time
+import sys
 
 def display_welcome():
     print("=" * 50)
@@ -29,7 +29,11 @@ def play_game():
 
     while attempts < max_attempts:
         try:
-            guess = int(input(f"Attempt {attempts + 1}/{max_attempts} - Enter your guess: "))
+            # Use sys.stdin.readline to be more compatible with some environments
+            user_input = sys.stdin.readline().strip()
+            if not user_input:
+                break
+            guess = int(user_input)
         except ValueError:
             print("Please enter a valid number! 🔢")
             continue

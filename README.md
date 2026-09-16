@@ -12,11 +12,15 @@ A simple yet entertaining number guessing game written in Python! Perfect for ki
 
 ## How to Play
 
-1. Run the game: `python guessing_game.py`
+1. Run the game: `python src/guessing_game.py`
 2. Enter your guess when prompted
 3. Receive hints to guide you toward the correct number
 4. Guess the number within 10 attempts to win!
 5. Enjoy the satisfaction of being a guessing master! 🏆
+
+## CI/CD Workflow
+
+This project uses **GitHub Actions** for Continuous Integration. Every push to the `master` branch triggers a linting process to ensure code quality.
 
 ## Example Gameplay
 
@@ -24,6 +28,7 @@ A simple yet entertaining number guessing game written in Python! Perfect for ki
 ==================================================
 🎉 Welcome to the Fun Number Guessing Game! 🎉
 ==================================================
+I'm thinking of a number between 1 and 100.
 I'm thinking of a number between 1 and 100.
 Can you guess what it is?
 You have 10 attempts to guess correctly.
@@ -56,7 +61,7 @@ You have 8 attempts left.
 
 ## Contributing
 
-Feel free to fork this repository and add your own twists:
+Feel free to fork this repository and and add your own twists:
 - Add difficulty levels (easy/medium/hard)
 - Implement a scoring system
 - Add multiplayer mode
