@@ -1,7 +1,9 @@
+"""Simple CLI number guessing game."""
+
 import random
-import time
 
 def display_welcome():
+    """Print the welcome banner and game rules."""
     print("=" * 50)
     print("🎉 Welcome to the Fun Number Guessing Game! 🎉")
     print("=" * 50)
@@ -13,14 +15,15 @@ def display_welcome():
     print()
 
 def get_hint(secret, guess):
+    """Return a hint based on how the guess compares to the secret."""
     if guess < secret:
         return "Too low! Try a higher number 📈"
-    elif guess > secret:
+    if guess > secret:
         return "Too high! Try a lower number 📉"
-    else:
-        return "Correct! You've guessed the number! 🎊"
+    return "Correct! You've guessed the number! 🎊"
 
 def play_game():
+    """Run one round of the guessing game."""
     secret_number = random.randint(1, 100)
     attempts = 0
     max_attempts = 10
@@ -37,14 +40,16 @@ def play_game():
         attempts += 1
 
         if guess == secret_number:
-            print(f"\n🎉 Congratulations! You guessed the number {secret_number} in {attempts} attempts! 🎉")
+            print(
+                f"\n🎉 Congratulations! You guessed the number "
+                f"{secret_number} in {attempts} attempts! 🎉"
+            )
             print("You're a guessing genius! 🧠")
             break
-        else:
-            hint = get_hint(secret_number, guess)
-            print(f"❌ {hint}")
-            if attempts < max_attempts:
-                print(f"You have {max_attempts - attempts} attempts left.\n")
+        hint = get_hint(secret_number, guess)
+        print(f"❌ {hint}")
+        if attempts < max_attempts:
+            print(f"You have {max_attempts - attempts} attempts left.\n")
 
     if attempts == max_attempts and guess != secret_number:
         print(f"\n😔 Sorry, you've used all {max_attempts} attempts.")
