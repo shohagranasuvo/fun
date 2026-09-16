@@ -1,14 +1,19 @@
+"""
+Unit tests for the number guessing game.
+This module ensures that the game logic handles wins, losses, and invalid inputs correctly.
+"""
 import unittest
 from unittest.mock import patch
 import io
-import sys
 from src.guessing_game import play_game
 
 # We need to mock the input since play_game uses sys.stdin.readline
 class TestGuessingGame(unittest.TestCase):
+    """Test suite for the guessing game logic."""
 
     @patch('sys.stdin.readline')
     def test_win_game(self, mock_stdin):
+        """Test that the game recognizes a correct guess and declares a win."""
         # Simulate the user guessing the correct number on the first try
         # We mock random.randint to always return 42
         with patch('random.randint', return_value=42):
@@ -24,6 +29,7 @@ class TestGuessingGame(unittest.TestCase):
 
     @patch('sys.stdin.readline')
     def test_lose_game(self, mock_stdin):
+        """Test that the game recognizes when all attempts are exhausted."""
         # Simulate the user guessing wrong 10 times
         with patch('random.randint', return_value=42):
             # 10 wrong guesses, then empty string
@@ -37,12 +43,13 @@ class TestGuessingGame(unittest.TestCase):
 
     @patch('sys.stdin.readline')
     def test_invalid_input(self, mock_stdin):
+        """Test that the game handles non-integer inputs without crashing."""
         # Test that the game handles non-integer inputs without crashing
         with patch('random.randint', return_value=42):
             # One invalid input, then the correct guess
             mock_stdin.side_effect = ["abc\n", "42\n", ""]
 
-            with patch('sys.stdout', new=io.StringIO() ) as fake_out:
+            with patch('sys.stdout', new=io.StringIO()) as fake_out:
                 play_game()
                 output = fake_out.getvalue()
                 self.assertIn("Please enter a valid number!", output)
