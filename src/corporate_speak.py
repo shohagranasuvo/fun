@@ -1,9 +1,10 @@
+"""
+Corporate Speak Translator: Turn normal talk into professional nonsense.
+Helps you sound like you're getting paid a lot to do very little.
+"""
 import random
 import sys
 
-# I spent way too long on this dictionary. 
-# It's basically a translator for people who want to sound 
-# like they're getting paid 200k a year to do nothing.
 CORPORATE_LEXICON = {
     "work": ["leverage strategic initiatives", "drive operational excellence", "optimize workflows"],
     "meeting": ["sync-up session", "touch-base", "alignment call", "deep-dive"],
@@ -21,40 +22,33 @@ CORPORATE_LEXICON = {
 }
 
 def synergize(text):
+    """Translates a simple sentence into corporate jargon."""
     words = text.split()
     new_text = []
-    
     for word in words:
-        # clean up the word a bit so it matches the lexicon
         clean_word = word.lower().strip('.,!?')
-        
         if clean_word in CORPORATE_LEXICON:
-            # pick a random corporate phrase to keep it "dynamic"
             replacement = random.choice(CORPORATE_LEXICON[clean_word])
             new_text.append(replacement)
         else:
             new_text.append(word)
-            
     return " ".join(new_text)
 
 def calculate_synergy_score(text):
-    # This is totally a real mathematical formula. Trust me.
-    # It's basically just counting how many long words we added.
+    """Calculates a fake synergy score based on word count."""
     return len(text.split()) * random.randint(10, 100)
 
 def main():
+    """Main entry point for the corporate synergy translator."""
     if len(sys.argv) > 1:
         input_text = " ".join(sys.argv[1:])
     else:
         input_text = "I need to work on this problem before the deadline."
-
     if not input_text:
         print("You didn't give me anything to synergize. Total failure of leadership.")
         return
-
     result = synergize(input_text)
     score = calculate_synergy_score(result)
-    
     print("\n--- Corporate Translation ---")
     print(f"Original: {input_text}")
     print(f"Synergized: {result}")
