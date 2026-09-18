@@ -6,9 +6,17 @@ import random
 import sys
 
 CORPORATE_LEXICON = {
-    "work": ["leverage strategic initiatives", "drive operational excellence", "optimize workflows"],
+    "work": [
+        "leverage strategic initiatives",
+        "drive operational excellence",
+        "optimize workflows",
+    ],
     "meeting": ["sync-up session", "touch-base", "alignment call", "deep-dive"],
-    "think": ["ideate on a holistic approach", "conceptualize a paradigm shift", "circle back to the core competency"],
+    "think": [
+        "ideate on a holistic approach",
+        "conceptualize a paradigm shift",
+        "circle back to the core competency",
+    ],
     "do": ["execute a pivot", "implement a scalable solution", "operationalize the vision"],
     "problem": ["growth opportunity", "sub-optimal outcome", "blocker in the pipeline"],
     "deadline": ["critical milestone target", "time-sensitive deliverable", "hard stop"],
