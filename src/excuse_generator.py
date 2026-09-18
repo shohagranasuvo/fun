@@ -1,12 +1,11 @@
+"""
+Professional Excuse Generator: High-impact excuses for missing meetings.
+Designed to sound urgent yet completely meaningless.
+"""
 import random
 
 def generate_excuse():
-    """
-    Generates a high-impact, corporate-grade excuse for missing a meeting.
-    Designed to sound vaguely urgent yet completely devoid of specific meaning.
-    """
-    
-    # The "Why" - High-level corporate chaos
+    """Generates a corporate-grade excuse for missing a meeting."""
     reasons = [
         "a critical misalignment in our cross-functional synergies",
         "an unexpected pivot in the strategic roadmap",
@@ -19,8 +18,6 @@ def generate_excuse():
         "a critical blockage in the value-stream mapping process",
         "an urgent need to socialize the new paradigm shift with the leadership team"
     ]
-    
-    # The "How" - Adding weight and professional anxiety
     intensifiers = [
         "Unfortunately, I've been pulled into",
         "Regrettably, I'm currently navigating",
@@ -29,8 +26,6 @@ def generate_excuse():
         "I'm dealing with a situation involving",
         "I've encountered a significant bottleneck regarding"
     ]
-    
-    # The "Next Steps" - The corporate promise of future productivity
     follow_ups = [
         "I'll circle back once I've reached a consensus.",
         "Let's take this offline and touch base later this week.",
@@ -39,20 +34,14 @@ def generate_excuse():
         "I'll ping you once I have more visibility into the situation.",
         "Let's align on a new time slot once the dust settles."
     ]
-    
-    intensifier = random.choice(intensifiers)
-    reason = random.choice(reasons)
-    follow_up = random.choice(follow_ups)
-    
-    return f"{intensifier} {reason}. {follow_up}"
+    return f"{random.choice(intensifiers)} {random.choice(reasons)}. {random.choice(follow_ups)}"
 
 def main():
+    """Main entry point for the excuse generator."""
     print("--- Professional Excuse Generator v1.0 ---")
     print("Generating your corporate shield...\n")
-    
     excuse = generate_excuse()
     print(f"Suggested Response:\n\n\"{excuse}\"")
-    
     print("\n------------------------------------------")
     print("Tip: Send this via Slack for maximum plausible deniability.")
 
