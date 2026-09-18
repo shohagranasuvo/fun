@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Digital Void</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #4a00e0;
+            --hole-color: #000;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #void-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 50px;
+        }
+
+        #black-hole {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: var(--hole-color);
+            border-radius: 50%;
+            box-shadow: 0 0 20px 5px #fff, 0 0 40px 10px var(--accent-color), 0 0 60px 20px #000;
+            z-index: 10;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 20px 5px #fff, 0 0 40px 10px var(--accent-color), 0 0 60px 20px #000; }
+            50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 30px 8px #fff, 0 0 50px 15px var(--accent-color), 0 0 80px 25px #000; }
+        }
+
+        #input-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 20;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--text-color);
+            color: var(--text-color);
+            font-size: 1.2rem;
+            padding: 10px;
+            text-align: center;
+            outline: none;
+            width: 300px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .worry-particle {
+            position: absolute;
+            white-space: nowrap;
+            pointer-events: none;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 5;
+        }
+
+        #status-msg {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            height: 1.2rem;
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="void-container">
+        <div id="black-hole"></div>
+    </div>
+
+    <div id="input-area">
+        <input type="text" id="worry-input" placeholder="Type your worry here..." autocomplete="off">
+        <button id="banish-btn">Banish to the Void</button>
+        <div id="status-msg"></div>
+    </div>
+
+    <script>
+        // The "Digital Void" logic - where worries go to die.
+        const input = document.getElementById('worry-input');
+        const btn = document.getElementById('banish-btn');
+        const status = document.getElementById('status-msg');
+        const voidContainer = document.getElementById('void-container');
+
+        const funnyResponses = [
+            "Successfully deleted from existence.",
+            "The void found that particularly tasty.",
+            "Your anxiety has been recycled into space dust.",
+            "Gone. Forever. Probably.",
+            "The black hole burps. Worry banished.",
+            "Added to the pile of cosmic insignificance.",
+            "Deleted. Don't let it come back.",
+            "Sucked in. No refunds.",
+            "Your stress is now a singularity."
+        ];
+
+        function createParticle(text) {
+            const p = document.createElement('div');
+            p.className = 'worry-particle';
+            p.innerText = text;
+            
+            // Start at a random position around the input area
+            const startX = window.innerWidth / 2 + (Math.random() * 200 - 100);
+            const startY = window.innerHeight / 2 + 100;
+            
+            p.style.left = startX + 'px';
+            p.style.top = startY + 'px';
+            
+            document.body.appendChild(p);
+
+            const hole = document.getElementById('black-hole').getBoundingClientRect();
+            const targetX = hole.left + hole.width / 2;
+            const targetY = hole.top + hole.height / 2;
+
+            let progress = 0;
+            const speed = 0.01 + Math.random() * 0.02;
+            
+            function animate() {
+                progress += speed;
+                
+                // Linear interpolation with a bit of a "swirl"
+                const currentX = startX + (targetX - startX) * progress + Math.sin(progress * 10) * 20;
+                const currentY = startY + (targetY - startY) * progress + Math.cos(progress * 10) * 20;
+                
+                p.style.left = currentX + 'px';
+                p.style.top = currentY + 'px';
+                p.style.fontSize = (1 - progress) * 1.2 + 'rem';
+                p.style.opacity = 1 - progress;
+                p.style.transform = `rotate(${progress * 720}deg)`;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    p.remove();
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function banish() {
+            const text = input.value.trim();
+            if (!text) {
+                status.innerText = "You can't banish nothingness. Type something!";
+                return;
+            }
+
+            // Create a few copies of the text for dramatic effect
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => createParticle(text), i * 100);
+            }
+
+            input.value = '';
+            status.innerText = funnyResponses[Math.floor(Math.random() * funnyResponses.length)];
+            
+            // Clear status after a few seconds
+            setTimeout(() => {
+                status.innerText = '';
+            }, 4000);
+        }
+
+        btn.addEventListener('click', banish);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') banish();
+        });
+
+        // Just a little Easter egg for the curious
+        console.log("Welcome to the Digital Void. Your worries are our fuel. 🌌");
+    </script>
+</body>
+</html>
