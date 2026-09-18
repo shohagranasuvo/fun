@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Scroll of Nothing</title>
+    <style>
+        :root {
+            --bg-color: #fafafa;
+            --text-color: #444;
+            --accent-color: #aaa;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121212;
+                --text-color: #bbb;
+                --accent-color: #444;
+            }
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        header {
+            padding: 4rem 1rem;
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 {
+            font-weight: 300;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        p.subtitle {
+            font-style: italic;
+            opacity: 0.6;
+            line-height: 1.6;
+        }
+        #nothing-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding-bottom: 10rem;
+        }
+        .nothing-item {
+            padding: 2rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .sentinel {
+            height: 50px;
+            width: 100%;
+        }
+        footer {
+            padding: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.4;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>The Infinite Scroll of Nothing</h1>
+        <p class="subtitle">A curated collection of absolute absence. <br> Please scroll down to experience the void.</p>
+    </header>
+
+    <div id="nothing-container">
+        <!-- Nothingness will be injected here -->
+    </div>
+
+    <div class="sentinel"></div>
+
+    <footer>
+        &copy; 2026 The Void Corporation. All rights reserved. (Or not. It's nothing.)
+    </footer>
+
+    <script>
+        /**
+         * The Great Library of Nothingness
+         * Just a bunch of phrases that mean absolutely nothing.
+         */
+        const phrases = [
+            "A profound silence.",
+            "The echoing void.",
+            "A distinct lack of content.",
+            "Pure, unadulterated nothing.",
+            "Wait, did you see that? Nope, nothing.",
+            "The sound of one hand clapping... in a vacuum.",
+            "Just a placeholder for a thought that never arrived.",
+            "Abstract void #42.",
+            "A gentle breeze of insignificance.",
+            "Looking for meaning? Keep scrolling.",
+            "This space intentionally left blank. Very intentionally.",
+            "Nothing to see here. Literally.",
+            "An exquisite void.",
+            "The void stares back. It's bored.",
+            "A subtle hint of absence.",
+            "Nothing. Zip. Zilch.",
+            "The architectural equivalent of a sigh.",
+            "A vacuum where a point should be.",
+            "Quietly non-existent.",
+            "A masterpiece of omission.",
+            "The conceptual equivalent of 0.",
+            "Still nothing. You're doing great.",
+            "Is this it? Yes, this is it.",
+            "An empty promise of content.",
+            "The void is feeling particularly spacious today.",
+            "A void so deep it has its own zip code.",
+            "Just a speck of nothingness.",
+            "Void-flavored air.",
+            "The absence of a point.",
+            "Carefully crafted vacuum."
+        ];
+
+        const container = document.getElementById('nothing-container');
+        const sentinel = document.querySelector('.sentinel');
+
+        function createNothing() {
+            // Generate a few items at once to make scrolling feel smoother
+            for (let i = 0; i < 3; i++) {
+                const item = document.createElement('div');
+                item.className = 'nothing-item';
+                
+                const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+                item.textContent = randomPhrase;
+                
+                container.appendChild(item);
+            }
+        }
+
+        // Use IntersectionObserver to detect when we've reached the bottom
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                createNothing();
+            }
+        }, {
+            rootMargin: '200px' // Start loading before the user actually hits the bottom
+        });
+
+        observer.observe(sentinel);
+
+        // Initial load
+        createNothing();
+    </script>
+</body>
+</html>
