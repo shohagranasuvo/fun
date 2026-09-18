@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Impossible Button</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a2e;
+            color: #e94560;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px #0f3460;
+        }
+
+        #escape-button {
+            position: absolute;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: #e94560;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+            z-index: 100;
+        }
+
+        #escape-button:hover {
+            background-color: #ff4d6d;
+            transform: scale(1.1);
+        }
+
+        #message {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-style: italic;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>Can You Click Me?</h1>
+        <button id="escape-button">Click Me!</button>
+    </div>
+
+    <div id="message">Nope. Not today.</div>
+
+    <script>
+        const btn = document.getElementById('escape-button');
+        const msg = document.getElementById('message');
+        
+        const taunts = [
+            "Too slow!",
+            "Over here!",
+            "Nice try, human!",
+            "I'm faster than your cursor!",
+            "Are you even trying?",
+            "Missed me!",
+            "Stop chasing me!",
+            "I'm an impossible button!",
+            "Catch me if you can!",
+            "Your mouse skills are... lacking."
+        ];
+
+        // Initialize button position to center
+        btn.style.left = (window.innerWidth / 2 - btn.offsetWidth / 2) + 'px';
+        btn.style.top = (window.innerHeight / 2 - btn.offsetHeight / 2) + 'px';
+
+        const moveButton = () => {
+            // Calculate safe bounds so button doesn't go off screen
+            const maxX = window.innerWidth - btn.offsetWidth;
+            const maxY = window.innerHeight - btn.offsetHeight;
+
+            // Random position
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+
+            // Change taunt
+            msg.textContent = taunts[Math.floor(Math.random() * taunts.length)];
+        };
+
+        // The magic: move when the cursor gets close
+        document.addEventListener('mousemove', (e) => {
+            const btnRect = btn.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+
+            // Distance between cursor and button center
+            const distance = Math.sqrt(
+                Math.pow(e.clientX - btnCenterX, 2) + 
+                Math.pow(e.clientY - btnCenterY, 2)
+            );
+
+            // Threshold for "too close"
+            if (distance < 100) {
+                moveButton();
+            }
+        });
+
+        // In case they somehow manage to click it (or use tab + enter)
+        btn.addEventListener('click', () => {
+            alert("Wait... WHAT?! How did you do that? You cheated! I'm calling the police!");
+            moveButton();
+        });
+
+        // Handle window resize to prevent button from being stuck off-screen
+        window.addEventListener('resize', () => {
+            btn.style.left = (window.innerWidth / 2 - btn.offsetWidth / 2) + 'px';
+            btn.style.top = (window.innerHeight / 2 - btn.offsetHeight / 2) + 'px';
+        });
+
+        // Natural comments:’ 
+        // I originally thought about making it move only on hover, 
+        // but moving it when the cursor is *near* feels way more frustrating.
+        // Frustration = User Engagement. (Probably).
+    </script>
+</body>
+</html>
