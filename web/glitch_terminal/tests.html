@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Glitch Terminal - Test Runner</title>
+    <style>
+        body { font-family: monospace; background: #111; color: #eee; padding: 20px; }
+        .pass { color: #0f0; }
+        .fail { color: #f00; }
+        .test-case { margin-bottom: 10px; padding: 10px; border: 1px solid #333; }
+    </style>
+</head>
+<body>
+    <h1>Puzzle Logic Tests</h1>
+    <div id="results"></div>
+
+    <script src="js/puzzles.js"></script>
+    <script src="js/tests.js"></script>
+    <script>
+        const report = runTests();
+        const resultsDiv = document.getElementById('results');
+
+        resultsDiv.innerHTML = `<h2>Total: ${report.total} | Passed: ${report.passed}</h2>`;
+
+        report.details.forEach(test => {
+            const div = document.createElement('div');
+            div.className = 'test-case';
+            div.innerHTML = `
+                <strong>${test.message}</strong><br>
+                Status: <span class="${test.status === '✅ PASS' ? 'pass' : 'fail'}">${test.status}</span><br>
+                Actual: ${test.actual} | Expected: ${test.expected}
+            `;
+            resultsDiv.appendChild(div);
+        });
+    </script>
+</body>
+</html>
