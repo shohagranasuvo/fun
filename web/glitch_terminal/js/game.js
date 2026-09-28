@@ -107,7 +107,15 @@ commandInput.addEventListener('keydown', (e) => {
         // Echo command
         const echo = document.createElement('div');
         echo.className = 'input-line';
-        echo.innerHTML = `<span class="prompt">guest@forbidden-server:~$</span> ${input}`;
+
+        const promptSpan = document.createElement('span');
+        promptSpan.className = 'prompt';
+        promptSpan.textContent = 'guest@forbidden-server:~$ ';
+
+        const inputSpan = document.createTextNode(input);
+
+        echo.appendChild(promptSpan);
+        echo.appendChild(inputSpan);
         terminalOutput.appendChild(echo);
 
         handleCommand(input);
